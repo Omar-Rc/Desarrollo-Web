@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Gastos Personales</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url(contabilidad\ fondo.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            padding: 20px;
+        }
+        
+        .caja-division {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 800px;
+            margin: 20px auto;
+        }
+        
+        .encabezados {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        
+        .form-label {
+            font-weight: 500;
+            color: #495057;
+            margin-bottom: 5px;
+        }
+        
+        .categoria-espacio {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .categoria-individual {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .ingreso-gasto {
+            margin-bottom: 15px;
+        }
+        
+        .divisor {
+            border-top: 1px dashed #ccc;
+            margin: 30px 0;
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .category h3 {
+            color: #444;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="caja-division">
+        <h2 class="encabezados">DATOS PERSONALES</h2>
+
+        <form id="datosForm">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="nombre" class="form-label">Nombres</label>
+                    <input type="text" class="form-control" id="nombre" placeholder="Ingrese su primer nombre">
+                </div>
+                <div class="col-md-6">
+                    <label for="apellido" class="form-label">Apellidos</label>
+                    <input type="text" class="form-control" id="apellido" placeholder="Ingrese apellido paterno">
+                </div>
+            </div>
+            
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <label for="dni" class="form-label">DNI</label>
+                    <input type="text" class="form-control" id="dni" placeholder="Ingrese su DNI">
+                </div>
+                <div class="col-md-6">
+                    <label for="telefono" class="form-label">Teléfono</label>
+                    <input type="text" class="form-control" id="telefono" placeholder="Ingrese su teléfono">
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary mt-3" onclick="validarDatos()">Comprobar</button>
+        </form>
+
+    </div>
+
+    <div class="caja-division">
+        <h2 class="encabezados">REGISTRO DE GASTOS MENSUALES</h2>
+        
+        <div class="categoria-espacio">
+            <!-- Gastos Fijos -->
+            <div class="categoria-individual">
+                <h3>G. Fijos</h3>
+                <div class="ingreso-gasto">
+                    <input type="text" class="form-control" placeholder="Luz" id="luz">
+                </div>
+                <div class="ingreso-gasto">
+                    <input type="text" class="form-control" placeholder="Agua" id="agua">
+                </div>
+                <div class="ingreso-gasto">
+                    <input type="text" class="form-control" placeholder="Gas" id="gas">
+                </div>
+                <div class="ingreso-gasto">
+                    <input type="text" class="form-control" placeholder="Internet" id="internet">
+                </div>
+                <div class="ingreso-gasto">
+                    <input type="text" class="form-control" placeholder="Celular" id="celular">
+                </div>
+            </div>
+            
+            <!-- Gastos Formación -->
+            <div class="categoria-individual">
+                <h3>G. Formación</h3>
+                <div class="ingreso-gasto">
+                    <input type="text" class="form-control" placeholder="Colegio" id="colegio">
+                </div>
+                <div class="ingreso-gasto">
+                    <input type="text" class="form-control" placeholder="Material" id="material">
+                </div>
+                <div class="ingreso-gasto">
+                    <input type="text" class="form-control" placeholder="Libros" id="libros">
+                </div>
+                <div class="ingreso-gasto">
+                    <input type="text" class="form-control" placeholder="Cursos" id="cursos">
+                </div>
+                <div class="ingreso-gasto">
+                    <input type="text" class="form-control" placeholder="Otros gastos formacion" id="f.otros">
+                </div>
+            </div>
+            
+            <!-- Gastos Ocio -->
+            <div class="categoria-individual">
+                <h3>G. Ocio</h3>
+                <div class="ingreso-gasto">
+                    <input type="text" class="form-control" placeholder="Vacaciones" id="vacaciones">
+                </div>
+                <div class="ingreso-gasto">
+                    <input type="text" class="form-control" placeholder="Restaurantes" id="restaurantes">
+                </div>
+                <div class="ingreso-gasto">
+                    <input type="text" class="form-control" placeholder="Deporte" id="deporte">
+                </div>
+                <div class="ingreso-gasto">
+                    <input type="text" class="form-control" placeholder="Paseos" id="paseos">
+                </div>
+                <div class="ingreso-gasto">
+                    <input type="text" class="form-control" placeholder="Otros gastos ocio" id="o.otros">
+                </div>
+            </div>
+        </div>
+        
+        <div class="divisor"></div>
+        
+        <div class="buttons">
+            <button type="button" class="btn btn-primary" onclick="calcularGastos()">Calcular</button>
+            <button type="button" class="btn btn-secondary" onclick="limpiarGastos()">Limpiar</button>
+            <button type="button" class="btn btn-success" onclick="grabarGastos()">Grabar</button>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function validarDatos() {
+            const nombre = document.getElementById("nombre").value;
+            const apellido = document.getElementById("apellido").value;
+            const dni = document.getElementById("dni").value.trim();
+            const telefono = document.getElementById("telefono").value;
+
+            if (!nombre || !apellido || !dni || !telefono) {
+                alert("Por favor complete todos los campos");
+                return;
+            }
+            
+            if (!/^\d+$/.test(dni)) {
+                alert("El DNI debe contener solo números");
+                return;
+            }
+
+            if (!/^\d+$/.test(telefono)) {
+                alert("El teléfono debe contener solo números");
+                return;
+            }
+            alert("Los datos personales ingresados son CORRECTOS, puede proseguir");
+        }
+        
+        async function calcularGastos() {
+            const gastos = {
+                fijos: {
+                    luz: parseFloat(document.getElementById('luz').value) || 0,
+                    agua: parseFloat(document.getElementById('agua').value) || 0,
+                    gas: parseFloat(document.getElementById('gas').value) || 0,
+                    internet: parseFloat(document.getElementById('internet').value) || 0,
+                    celular: parseFloat(document.getElementById('celular').value) || 0
+                },
+                formacion: {
+                    colegio: parseFloat(document.getElementById('colegio').value) || 0,
+                    material: parseFloat(document.getElementById('material').value) || 0,
+                    libros: parseFloat(document.getElementById('libros').value) || 0,
+                    cursos: parseFloat(document.getElementById('cursos').value) || 0,
+                    otros: parseFloat(document.getElementById('f.otros').value) || 0
+                },
+                ocio: {
+                    vacaciones: parseFloat(document.getElementById('vacaciones').value) || 0,
+                    restaurantes: parseFloat(document.getElementById('restaurantes').value) || 0,
+                    deporte: parseFloat(document.getElementById('deporte').value) || 0,
+                    paseos: parseFloat(document.getElementById('paseos').value) || 0,
+                    otros: parseFloat(document.getElementById('o.otros').value) || 0
+                }
+            };
+            
+            const totalFijos = Object.values(gastos.fijos).reduce((a, b) => a + b, 0);
+            const totalFormacion = Object.values(gastos.formacion).reduce((a, b) => a + b, 0);
+            const totalOcio = Object.values(gastos.ocio).reduce((a, b) => a + b, 0);
+            const totalGeneral = totalFijos + totalFormacion + totalOcio;
+            
+            alert(`Resumen de gastos:\n\n` +
+                `Gastos Fijos: S/.${totalFijos.toFixed(2)}\n` +
+                `Gastos Formación: S/.${totalFormacion.toFixed(2)}\n` +
+                `Gastos Ocio: S/.${totalOcio.toFixed(2)}\n\n` +
+                `TOTAL MENSUAL: S/.${totalGeneral.toFixed(2)}`);
+        }
+
+        async function grabarGastos() {
+            const nombre = document.getElementById("nombre").value;
+            const telefono = document.getElementById("telefono").value;
+            const gastos = {
+                fijos: {
+                    luz: parseFloat(document.getElementById('luz').value) || 0,
+                    agua: parseFloat(document.getElementById('agua').value) || 0,
+                    gas: parseFloat(document.getElementById('gas').value) || 0,
+                    internet: parseFloat(document.getElementById('internet').value) || 0,
+                    celular: parseFloat(document.getElementById('celular').value) || 0
+                },
+                formacion: {
+                    colegio: parseFloat(document.getElementById('colegio').value) || 0,
+                    material: parseFloat(document.getElementById('material').value) || 0,
+                    libros: parseFloat(document.getElementById('libros').value) || 0,
+                    cursos: parseFloat(document.getElementById('cursos').value) || 0,
+                    otros: parseFloat(document.getElementById('f.otros').value) || 0
+                },
+                ocio: {
+                    vacaciones: parseFloat(document.getElementById('vacaciones').value) || 0,
+                    restaurantes: parseFloat(document.getElementById('restaurantes').value) || 0,
+                    deporte: parseFloat(document.getElementById('deporte').value) || 0,
+                    paseos: parseFloat(document.getElementById('paseos').value) || 0,
+                    otros: parseFloat(document.getElementById('o.otros').value) || 0
+                }
+            };
+            
+            const totalFijos = Object.values(gastos.fijos).reduce((a, b) => a + b, 0);
+            const totalFormacion = Object.values(gastos.formacion).reduce((a, b) => a + b, 0);
+            const totalOcio = Object.values(gastos.ocio).reduce((a, b) => a + b, 0);
+
+
+            const url = "http://localhost:3000/gastos";
+            const respuesta = await axios.post(url, {
+                nombre: nombre,
+                telefono: telefono,
+                gastos_fijos: totalFijos,
+                gastos_formacion: totalFormacion,
+                gastos_ocio: totalOcio
+            });
+            if (respuesta.data) {
+                location.href = "Tabla.html";
+        }
+
+
+
+
+        }
+    
+        function limpiarGastos() {
+            const seccionGastos = document.querySelectorAll('.caja-division')[1];
+            const inputs = seccionGastos.querySelectorAll('input[type="text"]');
+            inputs.forEach(input => input.value = '');
+            alert('Todos los campos de gastos han sido limpiados');
+        }
+    </script>
+</body>
+</html>
