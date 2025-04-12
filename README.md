@@ -1,9 +1,8 @@
-# Contability
- Organizador de gastos
+# Desarrollo-Web Proyecto
+ "Calculadora de gastos"
 
  Integrantes:
 -Andres Cueva Lopez
 -Steven Santos Bejarano
--Eliot Mego Chavez
 -Omar Rios Campos
 
