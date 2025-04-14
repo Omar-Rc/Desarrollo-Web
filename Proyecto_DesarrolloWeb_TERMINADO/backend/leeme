@@ -4,11 +4,6 @@ Crear un registro de gastos (POST)
     Método: POST
     Body (JSON):
 
-    {
-      "name": "Juan Pérez",
-      "email": "juan@example.com"
-    }
-
 Obtener todos los usuarios (GET)
 
     URL: http://localhost:3000/gastos
@@ -24,11 +19,6 @@ Actualizar un usuario (PUT)
     URL: http://localhost:3000/gastos/1
     Método: PUT
     Body (JSON):
-
-    {
-      "name": "Juan Pérez Actualizado",
-      "email": "juan.actualizado@example.com"
-    }
 
 Eliminar un usuario (DELETE)
 
