@@ -10,8 +10,8 @@ app.use(cors()); // Soporte para cors
 // Configurar la conexión a MySQL
 const db = mysql.createConnection({
   host: 'localhost',
-  user: 'root',     // Cambia esto según tu configuración
-  password: '123456',     // Cambia esto si tienes contraseña
+  user: 'root',     
+  password: '123456',     
   database: 'db_gastos'
 });
 
@@ -26,9 +26,9 @@ db.connect((err) => {
 
 // Ruta para crear un nuevo registro de gastos
 app.post('/gastos', (req, res) => {
-  const { nombre, telefono, gastos_fijos, gastos_formacion, gastos_ocio } = req.body;
-  const query = 'INSERT INTO listado_gastos (nombre, telefono, gastos_fijos, gastos_formacion, gastos_ocio) VALUES (?, ?, ?, ?, ?)';
-  db.query(query, [nombre, telefono, gastos_fijos, gastos_formacion, gastos_ocio], (err, result) => {
+  const { nombre, apellidos, dni, telefono, gastos_fijos, gastos_formacion, gastos_ocio } = req.body;
+  const query = 'INSERT INTO listado_gastos (nombre, apellidos, dni, telefono, gastos_fijos, gastos_formacion, gastos_ocio) VALUES (?, ?, ?, ?, ?, ?, ?)';
+  db.query(query, [nombre, apellidos, dni, telefono, gastos_fijos, gastos_formacion, gastos_ocio], (err, result) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: 'Error al crear registro de gastos' });
@@ -36,6 +36,8 @@ app.post('/gastos', (req, res) => {
     res.status(201).json({ 
       id: result.insertId, 
       nombre, 
+      apellidos,
+      dni,
       telefono, 
       gastos_fijos, 
       gastos_formacion, 
@@ -75,9 +77,9 @@ app.get('/gastos/:id', (req, res) => {
 // Ruta para actualizar un registro de gastos
 app.put('/gastos/:id', (req, res) => {
   const { id } = req.params;
-  const { nombre, telefono, gastos_fijos, gastos_formacion, gastos_ocio } = req.body;
-  const query = 'UPDATE listado_gastos SET nombre = ?, telefono = ?, gastos_fijos = ?, gastos_formacion = ?, gastos_ocio = ? WHERE id = ?';
-  db.query(query, [nombre, telefono, gastos_fijos, gastos_formacion, gastos_ocio, id], (err, result) => {
+  const { nombre, apellidos, dni, telefono, gastos_fijos, gastos_formacion, gastos_ocio } = req.body;
+  const query = 'UPDATE listado_gastos SET nombre = ?, apellidos = ?, dni = ?, telefono = ?, gastos_fijos = ?, gastos_formacion = ?, gastos_ocio = ? WHERE id = ?';
+  db.query(query, [nombre, apellidos, dni, telefono, gastos_fijos, gastos_formacion, gastos_ocio, id], (err, result) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: 'Error al actualizar registro de gastos' });
@@ -88,6 +90,8 @@ app.put('/gastos/:id', (req, res) => {
     res.status(200).json({ 
       id, 
       nombre, 
+      apellidos,
+      dni,
       telefono, 
       gastos_fijos, 
       gastos_formacion, 
@@ -110,6 +114,42 @@ app.delete('/gastos/:id', (req, res) => {
     }
     res.status(200).json({ message: 'Registro de gastos eliminado con éxito' });
   });
+});
+
+//Login
+app.post('/login', async (req, res) => {
+  console.log("Datos recibidos:", req.body);
+  
+  const { username, password } = req.body;
+  
+  if (!username || !password) {
+      return res.status(400).json({ 
+          valido: false, 
+          error: 'Usuario y contraseña requeridos' 
+      });
+  }
+
+  try {
+      const [user] = await db.promise().query(
+          'SELECT * FROM usuarios WHERE username = ? AND password = ?', 
+          [username, password]
+      );
+      
+      if (user.length > 0) {
+          res.json({ valido: true });
+      } else {
+          res.status(401).json({ 
+              valido: false, 
+              error: 'Credenciales incorrectas' 
+          });
+      }
+  } catch (error) {
+      console.error('Error en login:', error);
+      res.status(500).json({ 
+          valido: false, 
+          error: 'Error en el servidor' 
+      });
+  }
 });
 
 // Iniciar el servidor
