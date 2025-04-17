@@ -30,8 +30,8 @@ node app.js
 
    - **Usuario:** `admin`  
    - **Contraseña:** `admin123`
-
-   *(También puedes revisar las credenciales en la base de datos adjunta al backend.)*
+   *(La base de datos se encuentra en la carpeta "sql" dentro del backend).
+   *(También puedes revisar las credenciales en la base de datos adjunta al backend).*
 
 5. El área de administración implementa un sistema **CRUD** completo: permite **crear, leer, actualizar y eliminar** datos.  
    Cualquier cambio se refleja directamente en la base de datos, manteniéndola siempre actualizada.
